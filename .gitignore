@@ -1,0 +1,11 @@
+# editors
+*~
+
+# usual runtime mess
+*.pyc
+
+# virtualenv
+bin/
+include/
+lib/
+local/
