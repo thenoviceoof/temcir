@@ -1,2 +1,2 @@
-bottle
-jinja2
+bottle == 0.11.4
+jinja2 == 2.6
