@@ -1,4 +1,8 @@
-from bottle import route, run
+from bottle import (get,
+                    post,
+                    request,
+                    route,
+                    run)
 import jinja2
 
 @get('/add')
