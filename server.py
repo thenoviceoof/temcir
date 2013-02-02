@@ -8,6 +8,8 @@ from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
 import pyjade
 
+import os
+
 env = Environment(loader=FileSystemLoader('templates/'),
                   extensions=['pyjade.ext.jinja.PyJadeExtension'])
 
@@ -24,9 +26,11 @@ def render_template(template_path, **context):
 ################################################################################
 # views
 
+PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
+
 @get('/static/<filename:path>')
 def static(filename):
-    return static_file(filename, root='static/')
+    return static_file(filename, root=os.path.join(PROJECT_PATH, 'static'))
 
 @get('/add')
 def add_task():
