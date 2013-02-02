@@ -2,7 +2,8 @@ from bottle import (get,
                     post,
                     request,
                     route,
-                    run)
+                    run,
+                    static_file)
 from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
 import pyjade
