@@ -3,8 +3,20 @@ from bottle import (get,
                     request,
                     route,
                     run)
-import jinja2
-import pymongo
+from jinja2 import Environment, FileSystemLoader
+from pymongo import MongoClient
+
+env = Environment(loader=FileSystemLoader('templates/'))
+
+connection = MongoClient('localhost', 27017)
+
+def render_template(template_path, **context):
+    '''
+    Basic util fn to wrap up template loading/rendering, which looks
+    suspiciously like flask's render_template
+    '''
+    template = env.get_template(template_path)
+    return template.render(**context)
 
 @get('/add')
 def add_task():
