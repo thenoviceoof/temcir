@@ -14,6 +14,10 @@ env = Environment(loader=FileSystemLoader('templates/'),
                   extensions=['pyjade.ext.jinja.PyJadeExtension'])
 
 connection = MongoClient('localhost', 27017)
+db = connection.temcir
+
+################################################################################
+# utils
 
 def render_template(template_path, **context):
     '''
@@ -80,4 +84,5 @@ def choose_task():
     '''
     return ''
 
-run(host='localhost', port=8080, debug=True)
+if __name__=='__main__':
+    run(host='localhost', port=8080, debug=True)
