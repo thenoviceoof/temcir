@@ -4,6 +4,7 @@ from bottle import (get,
                     route,
                     run)
 import jinja2
+import pymongo
 
 @get('/add')
 def add_task():
