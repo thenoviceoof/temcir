@@ -38,10 +38,7 @@ def static(filename):
 
 @get('/add')
 def add_task():
-    '''
-    Serve up the page to add a task
-    '''
-    return render_template('base.jade')
+    return render_template('task.jade')
 
 @post('/add')
 def add_task_endpoint():
