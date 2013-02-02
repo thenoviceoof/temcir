@@ -5,8 +5,10 @@ from bottle import (get,
                     run)
 from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
+import pyjade
 
-env = Environment(loader=FileSystemLoader('templates/'))
+env = Environment(loader=FileSystemLoader('templates/'),
+                  extensions=['pyjade.ext.jinja.PyJadeExtension'])
 
 connection = MongoClient('localhost', 27017)
 
@@ -18,13 +20,19 @@ def render_template(template_path, **context):
     template = env.get_template(template_path)
     return template.render(**context)
 
+################################################################################
+# views
+
+@get('/static/<filename:path>')
+def static(filename):
+    return static_file(filename, root='static/')
+
 @get('/add')
 def add_task():
     '''
     Serve up the page to add a task
     '''
-    # TODO: template
-    return 'Add a task'
+    return render_template('base.jade')
 
 @post('/add')
 def add_task_endpoint():
