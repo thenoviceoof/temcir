@@ -3,17 +3,38 @@ extends "base.jade"
 block content
   h2 Add task
 
-  form
+  form(action="/add", method="POST")
     ul#add-task
       li
-        label Name
-        input(type="text")
+        label(for="task-name") Name
+        input#task-name(name="task-name", type="text")
       li
-        label() Notes
-        textarea()
+        label(for="task-notes") Notes
+        textarea#task-notes(name="task-notes", cols=100, rows=10)
       li
-        label Tags
-        input#add-tag(type="text")
-        ul#tags
+        label(for="task-time") Estimated time
+        input#task-time(name="task-time", type="text")
+      li
+        label Snaptime
+        div#snaptime
+        input#task-snaptime(name="task-snaptime", type="text")
+      li
+        label Deadline
+        div#deadline
+        input#task-deadline(name="task-deadline", type="text")
+      li
+        label(for="task-tags") Tags
+        input#tag(name="task-tags", type="text")
       li
         button Submit
+
+block scripts
+  script
+    var snaptime_k = new Kalendae('snaptime');
+    snaptime_k.subscribe('change', function() {
+      $('task-snaptime').val(this.getSelected());
+    });
+    var deadline_k = new Kalendae('deadline');
+    deadline_k.subscribe('change', function() {
+      $('task-deadline').val(this.getSelected());
+    });

@@ -1,5 +1,6 @@
 from bottle import (get,
                     post,
+                    redirect,
                     request,
                     route,
                     run,
@@ -28,7 +29,7 @@ def render_template(template_path, **context):
     return template.render(**context)
 
 ################################################################################
-# views
+# static files
 
 PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -36,20 +37,34 @@ PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
 def static(filename):
     return static_file(filename, root=os.path.join(PROJECT_PATH, 'static'))
 
+################################################################################
+# views
+
 @get('/add')
 def add_task():
     return render_template('task.jade')
 
+TASK_ADD_MAPPING = {
+    'name': 'task-name',
+    'notes': 'task-notes',
+    'time': 'task-time',
+    'snaptime': 'task-snaptime',
+    'deadline': 'task-deadline',
+    'tags': 'task-tags',
+    }
+
 @post('/add')
 def add_task_endpoint():
-    '''
-    Add a task
-    '''
-    task = request.forms.get('task')
-    tags = request.forms.get('tags')
-    tags = tags.split(',')
+    data = {}
+    for n,v in TASK_ADD_MAPPING:
+        tmp = request.forms.get(v)
+        if tmp:
+            data[n] = tmp
+    if data.get('tags'):
+        data['tags'] = data.get('tags', '').split(',')
+    db.tasks.insert(data)
     # create_task(task, tags, time.now(), order=None)
-    return ''
+    return redirect('/add')
 
 @get('/list')
 def list_tasks():
