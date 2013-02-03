@@ -11,11 +11,13 @@ html
     // styles
     link(rel='stylesheet', href='/static/css/normalize.css')
     link(rel='stylesheet', href='/static/css/main.css')
+
+    link(rel='stylesheet', href='/static/kalendae/kalendae.css')
     // js-based feature detection
     script(src='/static/js/vendor/modernizr-2.6.2.min.js')
 
   body
-    h1 Temcir -
+    h1 Temcir - 
       small An auto-scheduler
 
     block content
@@ -25,7 +27,9 @@ html
     script  // fallback
       window.jQuery || document.write('<script src="/static/js/vendor/jquery-1.9.0.min.js"><\\/script>')
     // import other scripts
+    script(src="/static/kalendae/kalendae.min.js")
 
+    block scripts
     // Google Analytics
     script
       var _gaq=[['_setAccount','UA-26839689-1'],['_trackPageview']];
