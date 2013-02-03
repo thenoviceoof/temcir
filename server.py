@@ -67,18 +67,24 @@ def add_task_endpoint():
         data['tags'] = data['tags'].split(',')
     # do some basic data validation
     if set(['name', 'notes']) & set(data.keys()):
+        # DEBUG
         print data
         db.tasks.insert(data)
     # don't do AJAX magic for MVP
     return redirect('/add')
 
 @get('/list')
-def list_tasks():
-    '''
-    List tasks for ordering
-    '''
-    # TODO: template
-    return 'List some tasks'
+@get('/list/<num:int>')
+def list_tasks(num=10):
+    # get unsorted tasks
+    unsorted_tasks = db.tasks.find({'order': {'$exists': False}})
+    # get <num> sorted tasks
+    sorted_tasks = db.tasks.find({'order': {'$exists': True}})
+    unsorted_tasks = list(unsorted_tasks)
+    sorted_tasks = list(sorted_tasks.order_by('order')[:num])
+    return render_template('list.jade',
+                           sorted_tasks = sorted_tasks,
+                           unsorted_tasks = unsorted_tasks)
 
 @post('/list')
 def order_tasks():
