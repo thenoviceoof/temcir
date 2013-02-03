@@ -56,14 +56,20 @@ TASK_ADD_MAPPING = {
 @post('/add')
 def add_task_endpoint():
     data = {}
-    for n,v in TASK_ADD_MAPPING:
+    for n,v in TASK_ADD_MAPPING.iteritems():
         tmp = request.forms.get(v)
         if tmp:
             data[n] = tmp
+    # custom data handling
+    if data.get('time'):
+        data['time'] = float(data['time'])
     if data.get('tags'):
-        data['tags'] = data.get('tags', '').split(',')
-    db.tasks.insert(data)
-    # create_task(task, tags, time.now(), order=None)
+        data['tags'] = data['tags'].split(',')
+    # do some basic data validation
+    if set(['name', 'notes']) & set(data.keys()):
+        print data
+        db.tasks.insert(data)
+    # don't do AJAX magic for MVP
     return redirect('/add')
 
 @get('/list')
