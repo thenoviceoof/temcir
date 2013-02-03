@@ -3,6 +3,7 @@
 
 # usual runtime mess
 *.pyc
+.ropeproject/
 
 # virtualenv
 bin/
