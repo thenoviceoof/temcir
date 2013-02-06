@@ -145,9 +145,9 @@ def give_task():
     '''
     Offer a couple tasks, along with fun, or choose from the backlog
     '''
+    # currently we ignore time duration, deadlines, and snaptimes
     tasks = get_top_tasks()
-    # TODO: template
-    return 'Get a task to do'
+    return render_template('choice.jade', tasks=tasks)
 
 @post('/')
 def choose_task():

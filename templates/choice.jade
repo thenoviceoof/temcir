@@ -1,0 +1,11 @@
+extends "base.jade"
+
+block content
+  h2 Choose a task
+
+  ul
+    for task in tasks
+      li
+        h3 #{ task['name'] }
+        h3 #{ task['notes'] }
+        h3 #{ task['time'] }
