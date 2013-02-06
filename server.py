@@ -9,6 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 from pymongo import MongoClient
 import pyjade
 
+import random
 import os
 
 env = Environment(loader=FileSystemLoader('templates/'),
@@ -104,11 +105,47 @@ def order_tasks():
 
 ####################
 # Task out
+
+def weighted_choice(coll):
+    '''
+    Takes an ordered collection of [...(obj, weight)...], and returns
+    an obj randomly, weighted by the weights
+    '''
+    total = sum(w for obj,w in coll)
+    rw = random.random(0,total)
+    cw = 0
+    for i, ow in enumerate(coll):
+        obj, w = ow
+        cw += w
+        if rw < cw:
+            return obj, i
+    raise ValueError
+
+def get_top_tasks(num=3):
+    tasks = db.tasks.find({'order': {'$exists': True}}, sort=[('order', 1)])
+    weighted_tasks = [(t,0.9**i) for i,t in enumerate(tasks)]
+    # choose randomly for now (weighted)
+    chosen = []
+    while len(chosen) < num and weighted_tasks:
+        t, i = weighted_choice(weighted_tasks)
+        chosen.append(t)
+        weighted_tasks.pop(i)
+    # don't have enough to fill it up? try getting some unweighted tasks
+    if len(chosen) < num:
+        tasks = list(db.tasks.find({'order': {'$exists': False}}))
+        while len(chosen) < num and tasks:
+            t = random.choice(tasks)
+            chosen.append(t)
+            i = tasks.index(t)
+            del tasks[i]
+    return chosen
+
 @get('/')
-def get_task():
+def give_task():
     '''
     Offer a couple tasks, along with fun, or choose from the backlog
     '''
+    tasks = get_top_tasks()
     # TODO: template
     return 'Get a task to do'
 
