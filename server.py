@@ -92,11 +92,13 @@ def list_tasks(num=10):
                            sorted_tasks = sorted_tasks,
                            unsorted_tasks = unsorted_tasks)
 
+@post('/task/<id>')
+def edit_task(id):
+    return ''
+
 @post('/list')
 def order_tasks():
-    '''
-    Save the ordering of the tasks
-    '''
+    # order tasks w/ midpoint between floats
     return ''
 
 
