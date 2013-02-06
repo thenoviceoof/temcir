@@ -40,10 +40,8 @@ def static(filename):
 ################################################################################
 # views
 
-@get('/add')
-def add_task():
-    return render_template('task.jade')
-
+####################
+# task addition
 TASK_ADD_MAPPING = {
     'name': 'task-name',
     'notes': 'task-notes',
@@ -52,6 +50,10 @@ TASK_ADD_MAPPING = {
     'deadline': 'task-deadline',
     'tags': 'task-tags',
     }
+
+@get('/add')
+def add_task():
+    return render_template('task.jade')
 
 @post('/add')
 def add_task_endpoint():
@@ -73,15 +75,19 @@ def add_task_endpoint():
     # don't do AJAX magic for MVP
     return redirect('/add')
 
+
+####################
+# task listing/priority sorting
 @get('/list')
 @get('/list/<num:int>')
 def list_tasks(num=10):
     # get unsorted tasks
     unsorted_tasks = db.tasks.find({'order': {'$exists': False}})
     # get <num> sorted tasks
-    sorted_tasks = db.tasks.find({'order': {'$exists': True}})
+    sorted_tasks = db.tasks.find({'order': {'$exists': True}},
+                                 sort=[('order', 1)])
     unsorted_tasks = list(unsorted_tasks)
-    sorted_tasks = list(sorted_tasks.order_by('order')[:num])
+    sorted_tasks = list(sorted_tasks[:num])
     return render_template('list.jade',
                            sorted_tasks = sorted_tasks,
                            unsorted_tasks = unsorted_tasks)
@@ -93,6 +99,9 @@ def order_tasks():
     '''
     return ''
 
+
+####################
+# Task out
 @get('/')
 def get_task():
     '''
@@ -108,5 +117,8 @@ def choose_task():
     '''
     return ''
 
+
+####################
+# main loop
 if __name__=='__main__':
     run(host='localhost', port=8080, debug=True)
