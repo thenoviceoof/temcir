@@ -1,23 +1,27 @@
 extends "base.jade"
 
+block styles
+  link(rel='stylesheet', href='/static/css/list.css')
+
 block content
   h2 Unsorted tasks
   ul
     for task in unsorted_tasks
-      li
-        h3 #{ task['name'] }
+      li.task
+        h3 #{ task['name'] } - 
+          small #{ task['time'] }h
         p #{ task['notes'] }
-        p #{ task['time'] }
         if task['snaptime']
           time #{ task['snaptime'] }
         if task['deadline']
           time #{ task['deadline'] }
-        if tags
-          h4 Tags
+        if task['tags']
           ul
-            for tag in tags
-              li #{ tag }
+            li.tag Tags
+            for tag in task['tags']
+              li.tag #{ tag }
         else
-          h4 No Tags
+          div
+            div.tag.no-tag No Tags
 
   h2 Sorted tasks

@@ -1,0 +1,34 @@
+@import "base.less";
+
+#content-center {
+    width:30em;
+}
+
+#content {
+    li.task {
+        margin:0.25em;
+        padding:0.25em;
+        background-color:#E0E0E0;
+        border-radius:0 0 0.75em 0.75em;
+
+        h3 {
+            background-color:#D0D0D0;
+            cursor:move;
+        }
+        
+        p {
+            margin:0.25em 0.5em;
+        }
+    }
+
+    li.tag, .no-tag {
+        display:inline-block;
+        padding:0.1em 0.25em;
+        background-color:white;
+        border-radius:0.5em;
+    }
+    .no-tag {
+        background-color:#F0F0F0;
+        color:#808080;
+    }
+}
