@@ -6,27 +6,23 @@ block content
   form(action="/add", method="POST")
     ul#add-task
       li
-        label(for="task-name") Name
-        input#task-name(name="task-name", type="text")
+        input#task-name(name="task-name", type="text", placeholder="Name")
       li
-        label(for="task-notes") Notes
-        textarea#task-notes(name="task-notes", cols=100, rows=10)
+        input#task-time(name="task-time", type="text", placeholder="Estimated Time")
       li
-        label(for="task-time") Estimated time
-        input#task-time(name="task-time", type="text")
+        textarea#task-notes(name="task-notes", cols=100, rows=10, placeholder="Notes")
       li
         label Snaptime
         div#snaptime
-        input#task-snaptime(name="task-snaptime", type="text")
+        input#task-snaptime(name="task-snaptime", type="text", placeholder="time")
       li
         label Deadline
         div#deadline
-        input#task-deadline(name="task-deadline", type="text")
+        input#task-deadline(name="task-deadline", type="text", placeholder="time")
       li
-        label(for="task-tags") Tags
-        input#tag(name="task-tags", type="text")
+        input#tag(name="task-tags", type="text", placeholder="some,tags,here")
       li
-        button Submit
+        button Add task
 
 block scripts
   script
