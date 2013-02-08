@@ -7,18 +7,19 @@ block content
     ul#add-task
       li
         input#task-name(name="task-name", type="text", placeholder="Name")
-      li
         input#task-time(name="task-time", type="text", placeholder="Estimated Time")
       li
-        textarea#task-notes(name="task-notes", cols=100, rows=10, placeholder="Notes")
+        textarea#task-notes(name="task-notes", cols=60, rows=4, placeholder="Jot down some notes: this will eventually support markdown")
       li
-        label Snaptime
-        div#snaptime
-        input#task-snaptime(name="task-snaptime", type="text", placeholder="time")
-      li
-        label Deadline
-        div#deadline
-        input#task-deadline(name="task-deadline", type="text", placeholder="time")
+        div.time-cont
+          label Snaptime
+          div#snaptime
+          input#task-snaptime(name="task-snaptime", type="text", placeholder="time")
+
+        div.time-cont
+          label Deadline
+          div#deadline
+          input#task-deadline(name="task-deadline", type="text", placeholder="time")
       li
         input#tag(name="task-tags", type="text", placeholder="some,tags,here")
       li
